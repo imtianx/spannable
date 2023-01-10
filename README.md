@@ -88,10 +88,10 @@ dependencyResolutionManagement {
 }
 ```
 
-然后在 module 的 build.gradle 添加依赖框架
+然后在 module 的 build.gradle 添加依赖框架 ![GitHub release (latest by date)](https://img.shields.io/github/v/tag/imtianx/spannable)
 
 ```groovy
-implementation 'com.github.liangjingkanji:spannable:1.2.6'
+implementation 'com.github.imtianx:spannable:Tag'
 ```
 
 
