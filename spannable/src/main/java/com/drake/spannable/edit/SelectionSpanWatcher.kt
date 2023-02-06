@@ -21,7 +21,7 @@ class SelectionSpanWatcher<T : Any>(private val kclass: KClass<T>) : SpanWatcher
   ) {
     if (what === Selection.SELECTION_END && selEnd != nstart) {
       selEnd = nstart
-      text.getSpans(nstart, nend, kclass::class.java).firstOrNull()?.run {
+      text.getSpans(nstart, nend, kclass.java).firstOrNull()?.run {
         val spanStart = text.getSpanStart(this)
         val spanEnd = text.getSpanEnd(this)
         val index = if (abs(selEnd - spanEnd) > abs(selEnd - spanStart)) spanStart else spanEnd
@@ -31,7 +31,7 @@ class SelectionSpanWatcher<T : Any>(private val kclass: KClass<T>) : SpanWatcher
 
     if (what === Selection.SELECTION_START && selStart != nstart) {
       selStart = nstart
-      text.getSpans(nstart, nend, kclass::class.java).firstOrNull()?.run {
+      text.getSpans(nstart, nend, kclass.java).firstOrNull()?.run {
         val spanStart = text.getSpanStart(this)
         val spanEnd = text.getSpanEnd(this)
         val index = if (abs(selStart - spanEnd) > abs(selStart - spanStart)) spanStart else spanEnd
