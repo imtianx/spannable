@@ -18,7 +18,7 @@ apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 32
     signingConfigs {
         signed {
             storeFile file("../signed")
@@ -30,7 +30,7 @@ android {
     defaultConfig {
         applicationId "com.drake.spannable.sample"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -49,6 +49,9 @@ android {
     compileOptions {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 
     applicationVariants.all {
