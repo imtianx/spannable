@@ -20,10 +20,12 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableString
+import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.StyleSpan
 import android.text.style.URLSpan
+import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.request.RequestOptions
 import com.drake.engine.utils.dp
@@ -38,6 +40,7 @@ import com.drake.spannable.span.CenterImageSpan
 import com.drake.spannable.span.ColorSpan
 import com.drake.spannable.span.GlideImageSpan
 import com.drake.spannable.span.HighlightSpan
+import kotlin.math.floor
 
 
 class MainActivity : BaseMenuActivity() {
@@ -47,6 +50,24 @@ class MainActivity : BaseMenuActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        /**
+         * only support chinese
+         */
+//        binding.tvImage.text = "".addSpan("07e8ed4fd833a2807e8ed43a2807e8ed4fd83307e8ed4fd833a2807e8ed43a2807e8ed4fd833")
+//            .addSpan("哈哈哈", CenterImageSpan(this, R.drawable.ic_copy)
+////                .setAlign(CenterImageSpan.Align.BASELINE)
+////                .setDrawableSize(12.dp,12.dp)
+////                .setPaddingVertical(0,0)
+////                .setPaddingHorizontal(0,0)
+////                .setTextGravity(Gravity.START or Gravity.TOP)
+//            )
+
+        binding.tvImage.addTextAndEndImage(
+            "tb1pcoinxqfln6j4paq2837avfd0dpywbitdmarz9sa7s4jh9m6wu55qch4mtks6x2dgx",
+            R.drawable.ic_copy
+        )
+
 
         // 替换Span
         binding.tv.movementMethod = ClickableMovementMethod.getInstance()
@@ -134,6 +155,29 @@ class MainActivity : BaseMenuActivity() {
                 .setRequestOption(RequestOptions.centerCropTransform())
                 .setAlign(GlideImageSpan.Align.BOTTOM)
                 .setDrawableSize(100.dp)
+        }
+    }
+
+    fun TextView.addTextAndEndImage(content: String, resId: Int) {
+        text = content
+        post {
+            val lineWidth: Float = this.layout.getLineWidth(0)
+            val lineEnd: Int = this.layout.getLineEnd(0)
+            val widthPerChar = lineWidth / (lineEnd + 1)
+            val numberPerLine = floor(this.width.toDouble() / widthPerChar).toInt()
+            val stringBuilder = StringBuilder(text)
+            for (i in 1 until lineCount) {
+                stringBuilder.insert((i) * numberPerLine - 1, " ")
+            }
+            val spannableString = SpannableString("$stringBuilder")
+            val imageSpan = CenterImageSpan(context, resId)
+            spannableString.setSpan(
+                imageSpan,
+                spannableString.length - 1,
+                spannableString.length,
+                Spanned.SPAN_INCLUSIVE_EXCLUSIVE
+            )
+            text = spannableString
         }
     }
 }
